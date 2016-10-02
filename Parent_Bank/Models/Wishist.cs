@@ -22,5 +22,6 @@ namespace Parent_Bank.Models
         public bool approvedStatus { get; set; }
         public virtual int AccountId { get; set; }
         public virtual Account Account { get; set; }
+        // Nikhil Marathe first commit - test
     }
 }
