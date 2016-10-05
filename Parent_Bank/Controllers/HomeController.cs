@@ -26,5 +26,11 @@ namespace Parent_Bank.Controllers
 
             return View();
         }
+        public ActionResult Resources()
+        {
+            ViewBag.Message = "Your financial resources page.";
+
+            return View();
+        }
     }
 }

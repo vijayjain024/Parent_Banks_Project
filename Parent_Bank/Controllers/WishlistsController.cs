@@ -40,7 +40,8 @@ namespace Parent_Bank.Controllers
         // GET: Wishlists/Create
         public ActionResult Create()
         {
-            ViewBag.AccountId = new SelectList(db.Accounts, "AccountId", "Owner");
+            ViewBag.AccountId = new SelectList(db.Accounts, "AccountId", "Recepient");
+            
             return View();
         }
 
