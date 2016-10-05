@@ -22,9 +22,9 @@ namespace Parent_Bank.Controllers
             return View(db.Accounts.ToList());
         }
 
- 
 
-        
+
+
 
         // GET: Accounts/Details/5
         public ActionResult Details(int? id)
@@ -33,13 +33,36 @@ namespace Parent_Bank.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
-            if (account == null)
+
+            if (User.IsInRole("Owner"))
             {
-                return HttpNotFound();
+                var acc = db.Accounts.Where(a => a.Owner == User.Identity.Name && a.AccountId == id);
+
+
+                if (acc == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Transactions = db.Transactions.Where(t => t.AccountId == id);
+                ViewBag.WishLists = db.Wishlist.Where(w => w.AccountId == id);
+                ViewBag.Accounts = acc;
+                return View();
             }
-            return View(account);
+            else if (User.IsInRole("Recepient"))
+            {
+                var account = db.Accounts.Where(a => a.Recepient == User.Identity.Name && a.AccountId == id);
+                if (account == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Transactions = db.Transactions.Where(t => t.AccountId == id);
+                ViewBag.WishLists = db.Wishlist.Where(w => w.AccountId == id);
+                ViewBag.Accounts = account;
+                return View();
+            }
+            return View(db.Accounts.Find(id));
         }
+        
 
         // GET: Accounts/Create
         public ActionResult Create()

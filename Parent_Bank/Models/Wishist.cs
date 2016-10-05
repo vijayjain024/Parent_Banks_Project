@@ -19,6 +19,7 @@ namespace Parent_Bank.Models
         [Required]
         public string Link { get; set; }
         public DateTime DateAdded { get; set; }
+        public bool purchased { get; set; }
         public bool approvedStatus { get; set; }
         public virtual int AccountId { get; set; }
         public virtual Account Account { get; set; }

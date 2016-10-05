@@ -1,5 +1,5 @@
-﻿@model Parent_Bank.Models.Account
-
+﻿@using Parent_Bank.Models;
+@model Parent_Bank.Models.Account
 @{
     ViewBag.Title = "Details";
 }
@@ -10,57 +10,154 @@
     <h4>Account</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
+        @foreach (Account acc in ViewBag.Accounts)
+        {
+            <dt>
+                Owner of Account
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Owner)
-        </dd>
+            <dd>
+                @acc.Owner
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Recepient)
-        </dt>
+            <dt>
+                Recipient 
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Recepient)
-        </dd>
+            <dd>
+                @acc.Recepient
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dt>
+                Account Name
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @acc.Name
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OpenDate)
-        </dt>
+            <dt>
+                OpenDate
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OpenDate)
-        </dd>
+            <dd>
+                @acc.OpenDate
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.InterestRate)
-        </dt>
+            <dt>
+                Balance
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.InterestRate)
-        </dd>
+            <dd>
+                @acc.Balance
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Balance)
-        </dt>
+            <dt>
+                Description
+            </dt>
+            
+            <dt>
+                Interest
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Balance)
-        </dd>
-
+            <dd>
+                @acc.InterestRate
+            </dd>
+        }
     </dl>
 </div>
+<hr />
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @foreach (Transaction tr in ViewBag.Transactions)
+        {
+
+            <dt>
+                TransactionDate
+            </dt>
+
+            <dd>
+                @tr.TransactionDate
+            </dd>
+
+            <dt>
+                Amount
+            </dt>
+
+            <dd>
+                @tr.Amount
+            </dd>
+
+            <dt>
+                Note
+            </dt>
+
+            <dd>
+                @tr.Note
+            </dd>
+        }
+    </dl>
+</div>
+
+<div>
+    <h4>WishList</h4>
+    <hr />
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>
+                   Date of Wishlist Item
+                </th>
+                <th>
+                    Cost of Item
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Link
+                </th>
+                <th>
+                    Purchased
+                </th>
+            </tr>
+            @foreach (Wishlist wl in ViewBag.WishLists)
+            {
+
+
+                <tr>
+                    <td>
+                        @wl.DateAdded
+                    </td>
+
+                    <td>
+                        @wl.Cost
+                    </td>
+
+                    <td>
+                        @wl.Description
+                    </td>
+
+                    <td>
+                        @wl.Link
+                    </td>
+
+                    <td>
+                        @if (@wl.purchased == true)
+                        {<span>Yes</span>}
+                        @if (@wl.purchased == false)
+                        {<span>No</span>}
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AccountId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+

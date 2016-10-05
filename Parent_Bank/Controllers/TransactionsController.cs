@@ -129,5 +129,25 @@ namespace Parent_Bank.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost, ActionName("Purchase")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Purchase(Wishlist wishlist)
+        {
+            if (ModelState.IsValid)
+            {
+                Wishlist wl = db.Wishlist.FirstOrDefault(a => a.AccountId == wishlist.AccountId);
+                wl.purchased = true;
+                Transaction tr = new Transaction();
+                tr.AccountId = wishlist.AccountId;
+                tr.TransactionDate = DateTime.Now;
+                tr.Note = wishlist.Description;
+                db.Entry(tr).State = EntityState.Modified;
+                db.Entry(wl).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
