@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,8 @@ namespace Parent_Bank.Models
             Transactions = new List<Transaction>();
             Wishlists = new List<Wishlist>();
         }
+        [Key]
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int AccountId { get; set; }
 
 
@@ -42,6 +45,10 @@ namespace Parent_Bank.Models
 
         public static ValidationResult ValidateEmail(Account account, ValidationContext context)
         {
+           /* if (account == null)
+            {
+                return ValidationResult.Success;
+            }*/
             // IF THE VALUE IS BLANK THEN NO NEED TO TEST RETURN SUCCESS
             if (account.Owner.Equals(account.Recepient))
             {
