@@ -13,8 +13,7 @@ namespace Parent_Bank.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
-
+        
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Wishlist> Wishlist { get; set; }

@@ -143,27 +143,56 @@ namespace Parent_Bank.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult Buy(int id)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Wishlist list = db.Wishlist.Find(id);
-                list.purchased = true;
-                Transaction transaction = new Transaction();
-                transaction.AccountId = list.AccountId;
-                transaction.TransactionDate = DateTime.Now;
-                transaction.Note = "Debit for " + list.Description;
-                transaction.Amount = list.Cost * -1;
-                db.Entry(list).State = EntityState.Modified;
-                db.Transactions.Add(transaction);
-                db.SaveChanges();
-                // return RedirectToAction("Index");
+
+                Account account = db.Accounts.FirstOrDefault(a => a.Recepient == User.Identity.Name);
+                if (ModelState.IsValid)
+                {
+                    Wishlist list = db.Wishlist.Find(id);
+                    list.purchased = true;
+                    //Transaction transaction = new Transaction();
+                    // transaction.AccountId= list.AccountId;
+                    // transaction.TransactionDate = DateTime.Now;
+                    //  transaction.Note = "Debit for " + list.Description;
+                    //  transaction.Amount = list.Cost * -1;
+
+                    Transaction transaction = new Transaction()
+                    {
+
+                        AccountId = list.AccountId,
+                        Account = list.Account,           
+                        Amount = list.Cost * -1,
+                        Note = "marathe is an ass",
+                        TransactionDate = DateTime.UtcNow
+
+                    };
+                    
+                    double bal = account.Balance + transaction.Amount;
+                    account.Balance = bal;
+
+
+                    db.Entry(account).State = EntityState.Modified;
+                    db.Entry(list).State = EntityState.Modified;
+                    db.Transactions.Add(transaction);
+                    db.SaveChanges();
+                    // return RedirectToAction("Index");
+                }
+                //ViewBag.AccountID = new SelectList(db.Accounts, "ID", "Owner", transaction.AccountID);
+                //return View(wishList);
+                //Account account = db.Accounts.FirstOrDefault(a => a.Recipient == User.Identity.Name);
+                return RedirectToAction("Details", new { id = account.AccountId });
             }
-            //ViewBag.AccountID = new SelectList(db.Accounts, "ID", "Owner", transaction.AccountID);
-            //return View(wishList);
-            Account account = db.Accounts.FirstOrDefault(a => a.Recepient == User.Identity.Name);
-            return RedirectToAction("Details(" + account.AccountId + ")");
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

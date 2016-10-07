@@ -49,16 +49,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.approvedStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.approvedStatus)
-                    @Html.ValidationMessageFor(model => model.approvedStatus, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.AccountId, "AccountId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

@@ -26,9 +26,7 @@
         <th>
             @Html.DisplayNameFor(model => model.DateAdded)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.approvedStatus)
-        </th>
+
         <th></th>
     </tr>
 
@@ -49,9 +47,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.DateAdded)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.approvedStatus)
-        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |
