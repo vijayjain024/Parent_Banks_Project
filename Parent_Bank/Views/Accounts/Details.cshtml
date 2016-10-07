@@ -4,14 +4,18 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
+<h2>Details</h2>
+@using (Html.BeginForm("Buy", "Accounts", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 <div>
     <h4>Account</h4>
     <hr />
     <dl class="dl-horizontal">
         @foreach (Account acc in ViewBag.Accounts)
         {
+
             <dt>
                 Owner of Account
             </dt>
@@ -49,13 +53,13 @@
             </dt>
 
             <dd>
+                @{ var bal = acc.Balance;
+
+                    }
                 @acc.Balance
             </dd>
 
-            <dt>
-                Description
-            </dt>
-            
+
             <dt>
                 Interest
             </dt>
@@ -63,7 +67,7 @@
             <dd>
                 @acc.InterestRate
             </dd>
-        }
+                    }
     </dl>
 </div>
 <hr />
@@ -133,6 +137,7 @@
                     </td>
 
                     <td>
+                        
                         @wl.Cost
                     </td>
 
@@ -145,6 +150,14 @@
                     </td>
 
                     <td>
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Buy" class="btn btn-primary" />
+                            <input type="hidden" value=@wl.id name="id" />
+                        </div>
+                        @if (@wl.Account.Balance > @wl.Cost)
+                        { <a href="@wl.Link">Buy</a>}
+                        else
+                        { <span>Cant Buy</span> }
                         @if (@wl.purchased == true)
                         {<span>Yes</span>}
                         @if (@wl.purchased == false)
@@ -159,5 +172,5 @@
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
-
+                    }
 

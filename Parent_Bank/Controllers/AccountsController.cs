@@ -140,6 +140,31 @@ namespace Parent_Bank.Controllers
         // POST: Accounts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Buy(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                Wishlist list = db.Wishlist.Find(id);
+                list.purchased = true;
+                Transaction transaction = new Transaction();
+                transaction.AccountId = list.AccountId;
+                transaction.TransactionDate = DateTime.Now;
+                transaction.Note = "Debit for " + list.Description;
+                transaction.Amount = list.Cost * -1;
+                db.Entry(list).State = EntityState.Modified;
+                db.Transactions.Add(transaction);
+                db.SaveChanges();
+                // return RedirectToAction("Index");
+            }
+            //ViewBag.AccountID = new SelectList(db.Accounts, "ID", "Owner", transaction.AccountID);
+            //return View(wishList);
+            Account account = db.Accounts.FirstOrDefault(a => a.Recepient == User.Identity.Name);
+            return RedirectToAction("Details(" + account.AccountId + ")");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner")]

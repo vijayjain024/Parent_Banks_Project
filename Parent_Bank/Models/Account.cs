@@ -45,10 +45,10 @@ namespace Parent_Bank.Models
 
         public static ValidationResult ValidateEmail(Account account, ValidationContext context)
         {
-           /* if (account == null)
+           if (account == null)
             {
                 return ValidationResult.Success;
-            }*/
+            }
             // IF THE VALUE IS BLANK THEN NO NEED TO TEST RETURN SUCCESS
             if (account.Owner.Equals(account.Recepient))
             {
