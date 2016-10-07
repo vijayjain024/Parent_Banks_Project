@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Parent_Bank.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Parent_Bank.Controllers
 {
@@ -141,9 +142,13 @@ namespace Parent_Bank.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            /*var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            //commented this
+            ViewBag.Name = roleManager.Roles.ToList();*/
             ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                           .ToList(), "Name", "Name");
+                                            .ToList(), "Name", "Name");
             return View();
+
         }
 
         //
@@ -160,6 +165,8 @@ namespace Parent_Bank.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //this line is added for roles
+                    UserManager.AddToRole(user.Id, model.UserRoles);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -174,8 +181,9 @@ namespace Parent_Bank.Controllers
                 }
                 AddErrors(result);
             }
+            //commented this part 
             ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                          .ToList(), "Name", "Name");
+                                          .ToList(), "Owner", "Recepient");
             // If we got this far, something failed, redisplay form
             return View(model);
         }
