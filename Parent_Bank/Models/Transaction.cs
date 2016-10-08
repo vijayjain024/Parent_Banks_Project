@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,7 @@ namespace Parent_Bank.Models
 {
     public class Transaction
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         //public string Account { get; set; }
         public DateTime TransactionDate { get; set; }
@@ -18,7 +20,7 @@ namespace Parent_Bank.Models
 
         [Required]
         public string Note { get; set; }
-        public virtual int AccountId { get; set; }
+        public int AccountId { get; set; }
         public virtual Account Account { get; set; }
         
         

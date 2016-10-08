@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Parent_Bank.Models
 {
-    [CustomValidation(typeof(Account), "ValidateEmail")]
+   [CustomValidation(typeof(Account), "ValidateEmail")]
     public class Account
     {
         public Account() {
